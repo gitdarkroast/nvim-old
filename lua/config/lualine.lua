@@ -21,7 +21,7 @@ local conditions = {
 local config = {
   options = {
     -- Disable sections and component separators
-    theme = "tokoynight",
+    theme = "tokyonight",
     section_separators = { left = "", right = "" },
     component_separators = { left = "", right = "" },
     icons_enabled = true,
@@ -30,12 +30,8 @@ local config = {
     -- these are to remove the defaults
     lualine_a = {
       {'mode'},
-      --{ "filename", path = 1, symbols = { modified = "  ", readonly = "" } },
-      {'buffers',
-        mode = 2,
-        max_length = vim.o.columns * 2 / 3,
-
-    },
+      { "filename", path = 1, symbols = { modified = "  ", readonly = "" } },
+      --{'buffers', mode = 2, max_length = vim.o.columns * 2 / 3, },
     },
     lualine_b = {
       { "filesize", cond = conditions.buffer_not_empty},

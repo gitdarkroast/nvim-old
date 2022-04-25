@@ -27,7 +27,7 @@ vim.cmd([[
 return require("packer").startup(function(use)
   use({ "wbthomason/packer.nvim" })
   use({"lewis6991/impatient.nvim"})
-  use({ "stevearc/dressing.nvim", event = "BufReadPre" })
+--  use({ "stevearc/dressing.nvim", event = "BufReadPre" })
   use({
     "rcarriga/nvim-notify",
     event = "VimEnter",
@@ -35,6 +35,7 @@ return require("packer").startup(function(use)
       vim.notify = require("notify")
     end,
   })
+
   -- LSP
   use({
     "neovim/nvim-lspconfig",
@@ -58,15 +59,8 @@ return require("packer").startup(function(use)
     },
   })
 
-  use({
-    "SmiteshP/nvim-gps",
-    requires = "nvim-treesitter/nvim-treesitter",
-    wants = "nvim-treesitter",
-    module = "nvim-gps",
-    config = function()
-      require("nvim-gps").setup({ separator = " " })
-    end,
-  })
+-- Visual representation of undo
+  use({"mbbill/undotree", cmd = "UndotreeToggle"})
 
   use({
     "simrat39/rust-tools.nvim",
@@ -107,33 +101,8 @@ return require("packer").startup(function(use)
   })
 
   -- Theme: color schemes
-  -- use("tjdevries/colorbuddy.vim")
   use({
-    -- "shaunsingh/nord.nvim",
-    -- "shaunsingh/moonlight.nvim",
-    -- { "olimorris/onedark.nvim", requires = "rktjmp/lush.nvim" },
-    -- "joshdick/onedark.vim",
-    -- "wadackel/vim-dogrun",
-    -- { "npxbr/gruvbox.nvim", requires = "rktjmp/lush.nvim" },
-    -- "bluz71/vim-nightfly-guicolors",
-    -- { "marko-cerovac/material.nvim" },
-    -- "sainnhe/edge",
-    -- { "embark-theme/vim", as = "embark" },
-    -- "norcalli/nvim-base16.lua",
-    -- "RRethy/nvim-base16",
-    -- "novakne/kosmikoa.nvim",
-    -- "glepnir/zephyr-nvim",
-    -- "ghifarit53/tokyonight-vim"
-    -- "sainnhe/sonokai",
-    -- "ellisonleao/gruvbox.nvim",
-    -- "arcticicestudio/nord-vim",
-    -- "drewtempelmeyer/palenight.vim",
-    -- "Th3Whit3Wolf/onebuddy",
-    -- "christianchiarulli/nvcode-color-schemes.vim",
-    -- "Th3Whit3Wolf/one-nvim"
-
       "folke/tokyonight.nvim",
-    -- event = "VimEnter",
     config = function()
       require("config.theme")
     end,
@@ -190,7 +159,6 @@ return require("packer").startup(function(use)
       "plenary.nvim",
       "popup.nvim",
       "telescope-z.nvim",
-      -- "telescope-frecency.nvim",
       "telescope-fzy-native.nvim",
       "telescope-project.nvim",
       "trouble.nvim",
@@ -203,7 +171,6 @@ return require("packer").startup(function(use)
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-symbols.nvim",
       "nvim-telescope/telescope-fzy-native.nvim",
-      -- { "nvim-telescope/telescope-frecency.nvim", requires = "tami5/sql.nvim" }
     },
   })
   -- Indent Guides and rainbow brackets
@@ -222,6 +189,24 @@ return require("packer").startup(function(use)
     wants = "nvim-web-devicons",
     config = function()
       require("config.bufferline")
+    end,
+  })
+
+ -- Terminal
+  use({
+    "akinsho/nvim-toggleterm.lua",
+    keys = "<M-`>",
+    config = function()
+      require("config.terminal")
+    end,
+  }) 
+
+  use({
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
+    module = "diffview",
+    config = function()
+      require("config.diffview")
     end,
   })
 

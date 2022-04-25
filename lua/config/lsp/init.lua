@@ -1,5 +1,6 @@
 require("config.lsp.diagnostics").setup()
 require("config.lsp.kind").setup()
+--local diagnostics = require("diagnostics")
 
 local function on_attach(client, bufnr)
   require("config.lsp.formatting").setup(client, bufnr)
@@ -14,13 +15,13 @@ local function on_attach(client, bufnr)
 end
 
 local servers = {
-  ansiblels = {},
-  bashls = {},
+  --ansiblels = {},
+  --bashls = {},
   clangd = {},
-  cssls = {},
+  --cssls = {},
   dockerls = {},
-  eslint = {},
-  html = {},
+  --eslint = {},
+  --html = {},
   jsonls = {},
   pyright = {},
   rust_analyzer = {
@@ -35,8 +36,17 @@ local servers = {
       },
     },
   },
-  sumneko_lua = {},
-  tsserver = {},
+  sumneko_lua = {
+    settings = {
+        Lua = {
+        diagnostics = {
+            -- Get the language server to recognize the `vim` global
+            globals = {'vim'},
+            },
+        },
+    },
+  },
+  --tsserver = {},
   vimls = {},
   -- tailwindcss = {},
 }

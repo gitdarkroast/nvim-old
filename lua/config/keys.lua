@@ -13,10 +13,10 @@ wk.setup({
 })
 
 -- Move to window using the <ctrl> movement keys
-util.nmap("<left>", "<C-w>h")
-util.nmap("<down>", "<C-w>j")
-util.nmap("<up>", "<C-w>k")
-util.nmap("<right>", "<C-w>l")
+util.nmap("<C-h>", "<C-w>h")
+util.nmap("<C-j>", "<C-w>j")
+util.nmap("<C-k>", "<C-w>k")
+util.nmap("<C-l>", "<C-w>l")
 
 -- Resize window using <ctrl> arrow keys
 util.nnoremap("<S-Up>", ":resize +2<CR>")
@@ -206,9 +206,9 @@ local leader = {
     n = { "<cmd>lua require('github-notifications.menu').notifications()<cr>", "GitHub Notifications" },
   },
   p = {
-    name = "+project",
-    p = "Open Project",
-    b = { ":Telescope file_browser cwd=~/projects<CR>", "Browse ~/projects" },
+    name = "+workspace",
+    p = "Open workspace",
+    b = { ":Telescope find_files cwd=~/workspace<CR>", "Browse ~/workspace" },
   },
   t = {
     name = "toggle",
@@ -250,7 +250,7 @@ local leader = {
   },
   ["`"] = { "<cmd>:e #<cr>", "Switch to Other Buffer" },
   [" "] = "Find File",
-  ["."] = { ":Telescope file_browser<CR>", "Browse Files" },
+  ["."] = { ":Telescope find_files<CR>", "Find Files" },
   [","] = { "<cmd>Telescope buffers show_all_buffers=true<cr>", "Switch Buffer" },
   ["/"] = { "<cmd>Telescope live_grep<cr>", "Search" },
   [":"] = { "<cmd>Telescope command_history<cr>", "Command History" },

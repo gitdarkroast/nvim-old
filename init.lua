@@ -7,6 +7,9 @@
 -- The above ASCII art is generated using service provided in this webpage:
 -- https://www.kammerl.de/ascii/AsciiSignature.php
 --
+-- Configration borrowed from may sources.
+-- - a good amount from https://github.com/folke/dot
+--
 --{ Main configuration
 
 require("impatient")
@@ -15,5 +18,4 @@ require("impatient")
 require("options")
 
 require("plugins")
-
 --}
