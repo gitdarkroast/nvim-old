@@ -51,7 +51,12 @@ return require("packer").startup(function(use)
         end,
         requires = {
             "jose-elias-alvarez/nvim-lsp-ts-utils",
-            "jose-elias-alvarez/null-ls.nvim",
+            {
+                "jose-elias-alvarez/null-ls.nvim",
+                config = function()
+                    require("config.null-ls")
+                end,
+            },
             "folke/lua-dev.nvim",
             "williamboman/nvim-lsp-installer",
         },
@@ -119,13 +124,21 @@ return require("packer").startup(function(use)
     })
     -- Dashboard
     use({ "glepnir/dashboard-nvim", config = [[require('config.dashboard')]] })
+
+
     use({
-        "norcalli/nvim-terminal.lua",
-        ft = "terminal",
+        "akinsho/toggleterm",
         config = function()
-            require("terminal").setup()
-        end,
+            require("config.toggleterm")
+        end
     })
+    -- use({
+    --     "norcalli/nvim-terminal.lua",
+    --     ft = "terminal",
+    --     config = function()
+    --         require("terminal").setup()
+    --     end,
+    -- })
     use({ "nvim-lua/plenary.nvim", module = "plenary" })
     use({ "nvim-lua/popup.nvim", module = "popup" })
 
@@ -181,6 +194,16 @@ return require("packer").startup(function(use)
         end,
     })
 
+    -- Easily comment stuff
+    use({
+        "numToStr/Comment.nvim",
+        requires = {
+            "JoosepAlviste/nvim-ts-context-commentstring",
+        },
+        config = function()
+            require("config.comment")
+        end,
+    })
     -- Tabs
     use({
         "akinsho/bufferline.nvim",
@@ -246,9 +269,9 @@ return require("packer").startup(function(use)
         opt = true,
         event = "BufRead",
         requires = {
-        { "nvim-treesitter/playground", opt = true, cmd = "TSHighlightCapturesUnderCursor" },
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        "RRethy/nvim-treesitter-textsubjects",
+            { "nvim-treesitter/playground", opt = true, cmd = "TSHighlightCapturesUnderCursor" },
+            "nvim-treesitter/nvim-treesitter-textobjects",
+            "RRethy/nvim-treesitter-textsubjects",
         },
         config = [[require('config.treesitter')]],
     })
