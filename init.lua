@@ -7,8 +7,9 @@
 -- The above ASCII art is generated using service provided in this webpage:
 -- https://www.kammerl.de/ascii/AsciiSignature.php
 --
--- Configration borrowed from may sources.
--- - a good amount from https://github.com/folke/dot
+-- Configration borrowed from may sources:
+-- - https://github.com/folke/dot
+-- - https://github.com/LunarVim/Neovim-from-scratch
 --
 -- {{{ Main configuration
 require("impatient")
