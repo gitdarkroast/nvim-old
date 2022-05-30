@@ -15,13 +15,8 @@ local function on_attach(client, bufnr)
 end
 
 local servers = {
-  --ansiblels = {},
-  --bashls = {},
   clangd = {},
-  --cssls = {},
   dockerls = {},
-  --eslint = {},
-  --html = {},
   jsonls = {},
   pyright = {},
   rust_analyzer = {
@@ -43,17 +38,20 @@ local servers = {
             -- Get the language server to recognize the `vim` global
             globals = {'vim'},
             },
+            workspace = {
+                library = {
+                [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                [vim.fn.stdpath("config") .. "/lua"] = true,
+                },
+            },
         },
     },
   },
-  --tsserver = {},
   vimls = {},
-  -- tailwindcss = {},
 }
 
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
---require("workspace").setup()
 require("lua-dev").setup()
 
 local options = {

@@ -1,5 +1,5 @@
 --
---  __ _  _  _  __  _  _     ___  __   __ _  ____  __  ___ 
+--  __ _  _  _  __  _  _     ___  __   __ _  ____  __  ___
 -- (  ( \/ )( \(  )( \/ )   / __)/  \ (  ( \(  __)(  )/ __)
 -- /    /\ \/ / )( / \/ \  ( (__(  O )/    / ) _)  )(( (_ \
 -- \_)__) \__/ (__)\_)(_/   \___)\__/ \_)__)(__)  (__)\___/
@@ -10,12 +10,9 @@
 -- Configration borrowed from may sources.
 -- - a good amount from https://github.com/folke/dot
 --
---{ Main configuration
-
+-- {{{ Main configuration
 require("impatient")
-
 -- Basic non-plugin related options
 require("options")
-
 require("plugins")
---}
+-- }}}

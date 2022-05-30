@@ -1,26 +1,114 @@
--- local util = require("util")
+local cmp_status_ok, cmp = pcall(require, "cmp")
+if not cmp_status_ok then
+  return
+end
 
-vim.o.completeopt = "menuone,noselect"
+local snip_status_ok, luasnip = pcall(require, "luasnip")
+if not snip_status_ok then
+  return
+end
 
--- Setup nvim-cmp.
-local cmp = require("cmp")
+require("luasnip/loaders/from_vscode").lazy_load()
 
-cmp.setup({
-  completion = {
-    completeopt = "menu,menuone,noinsert",
-  },
+local check_backspace = function()
+  local col = vim.fn.col "." - 1
+  return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+end
+
+--   פּ ﯟ   some other good icons
+local kind_icons = {
+  Text = "",
+  Method = "m",
+  Function = "",
+  Constructor = "",
+  Field = "",
+  Variable = "",
+  Class = "",
+  Interface = "",
+  Module = "",
+  Property = "",
+  Unit = "",
+  Value = "",
+  Enum = "",
+  Keyword = "",
+  Snippet = "",
+  Color = "",
+  File = "",
+  Reference = "",
+  Folder = "",
+  EnumMember = "",
+  Constant = "",
+  Struct = "",
+  Event = "",
+  Operator = "",
+  TypeParameter = "",
+}
+-- find more here: https://www.nerdfonts.com/cheat-sheet
+
+cmp.setup {
   snippet = {
     expand = function(args)
-      -- For `luasnip` user.
-      require("luasnip").lsp_expand(args.body)
+      luasnip.lsp_expand(args.body) -- For `luasnip` users.
     end,
   },
   mapping = {
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = cmp.mapping.close(),
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+    ["<C-k>"] = cmp.mapping.select_prev_item(),
+		["<C-j>"] = cmp.mapping.select_next_item(),
+    ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
+    ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
+    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    ["<C-e>"] = cmp.mapping {
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    },
+    -- Accept currently selected item. If none selected, `select` first item.
+    -- Set `select` to `false` to only confirm explicitly selected items.
+    ["<CR>"] = cmp.mapping.confirm { select = true },
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expandable() then
+        luasnip.expand()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif check_backspace() then
+        fallback()
+      else
+        fallback()
+      end
+    end, {
+      "i",
+      "s",
+    }),
+
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, {
+      "i",
+      "s",
+    }),
+  },
+  formatting = {
+    fields = { "kind", "abbr", "menu" },
+    format = function(entry, vim_item)
+      -- Kind icons
+      vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+      -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+      vim_item.menu = ({
+        nvim_lsp = "[LSP]",
+        luasnip = "[Snippet]",
+        buffer = "[Buffer]",
+        path = "[Path]",
+      })[entry.source.name]
+      return vim_item
+    end,
   },
   sources = {
     { name = "nvim_lsp" },
@@ -28,96 +116,18 @@ cmp.setup({
     { name = "buffer" },
     { name = "path" },
   },
-  formatting = {
-    format = require("config.lsp.kind").cmp_format(),
+  confirm_opts = {
+    behavior = cmp.ConfirmBehavior.Replace,
+    select = false,
   },
---  documentation = {
---    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
---    winhighlight = "NormalFloat:NormalFloat,FloatBorder:TelescopeBorder",
---  },
+  window = {
+    documentation = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    },
+  },
   experimental = {
-    ghost_text = {
-      hl_group = "LspCodeLens",
-    },
+    ghost_text = true,
+    native_menu = false,
   },
-  sorting = {
-    comparators = {
-      cmp.config.compare.sort_text,
-      cmp.config.compare.offset,
-      -- cmp.config.compare.exact,
-      cmp.config.compare.score,
-      -- cmp.config.compare.kind,
-      -- cmp.config.compare.length,
-      cmp.config.compare.order,
-    },
-  },
-})
-local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
-
--- local types = cmp.types
--- cmp.config.compare.kind = function(entry1, entry2)
---   local kind1 = entry1:get_kind()
---   kind1 = kind1 == types.lsp.CompletionItemKind.Text and 100 or kind1
---   local kind2 = entry2:get_kind()
---   kind2 = kind2 == types.lsp.CompletionItemKind.Text and 100 or kind2
---   if kind1 ~= kind2 then
---     if kind1 == types.lsp.CompletionItemKind.Snippet then
---       return false
---     end
---     if kind2 == types.lsp.CompletionItemKind.Snippet then
---       return true
---     end
---     local diff = kind1 - kind2
---     if diff < 0 then
---       return true
---     elseif diff > 0 then
---       return false
---     end
---   end
--- end
-
--- require("compe").setup({
---   enabled = true,
---   autocomplete = true,
---   debug = false,
---   min_length = 1,
---   preselect = "always", -- changed to "enable" to prevent auto select
---   throttle_time = 80,
---   source_timeout = 200,
---   incomplete_delay = 400,
---   max_abbr_width = 100,
---   max_kind_width = 100,
---   max_menu_width = 100,
---   documentation = {
---     border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
---   },
-
---   source = {
---     path = true,
---     buffer = true,
---     calc = true,
---     nvim_lsp = true,
---     nvim_lua = false,
---     vsnip = false,
---     luasnip = true,
---     treesitter = false,
---     emoji = true,
---     spell = true,
---   },
--- })
-
--- util.inoremap("<C-Space>", "compe#complete()", { expr = true })
--- util.inoremap("<C-e>", "compe#close('<C-e>')", { expr = true })
-
--- local function complete()
---   if vim.fn.pumvisible() == 1 then
---     return vim.fn["compe#confirm"]({ keys = "<cr>", select = true })
---   else
---     return require("nvim-autopairs").autopairs_cr()
---   end
--- end
-
--- util.imap("<CR>", complete, { expr = true })
--- vim.cmd([[autocmd User CompeConfirmDone silent! lua vim.lsp.buf.signature_help()]])
+}
 

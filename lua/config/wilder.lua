@@ -21,4 +21,3 @@ w.set_option({
        highlighter = w.basic_highlighter(),
     }),
 })
-
