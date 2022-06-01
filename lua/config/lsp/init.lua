@@ -14,8 +14,9 @@ local function on_attach(client, bufnr)
   end
 end
 
+
 local servers = {
-  clangd = {},
+  ccls = {},
   dockerls = {},
   jsonls = {},
   pyright = {},
@@ -52,7 +53,7 @@ local servers = {
 
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-require("lua-dev").setup()
+--require("lua-dev").setup()
 
 local options = {
   on_attach = on_attach,

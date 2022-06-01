@@ -169,7 +169,6 @@ local leader = {
     },
     g = {
         name = "+git",
-        g = { "<cmd>Neogit kind=split<CR>", "NeoGit" },
         l = {
             function()
                 require("util").float_terminal("lazygit")
