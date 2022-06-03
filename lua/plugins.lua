@@ -42,7 +42,7 @@ return require("packer").startup(function(use)
         wants = {
             "nvim-lsp-ts-utils",
             "null-ls.nvim",
---            "lua-dev.nvim",
+            "lua-dev.nvim",
             "cmp-nvim-lsp",
             "nvim-lsp-installer",
         },
@@ -57,7 +57,7 @@ return require("packer").startup(function(use)
                     require("config.null-ls")
                 end,
             },
---            "folke/lua-dev.nvim",
+            "folke/lua-dev.nvim",
             "williamboman/nvim-lsp-installer",
         },
     })
