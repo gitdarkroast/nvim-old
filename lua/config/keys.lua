@@ -92,22 +92,9 @@ util.inoremap("<C-s>", "<esc>:w<cr>")
 util.nnoremap("<C-s>", "<esc>:w<cr>")
 util.nnoremap("<C-c>", "<esc>ciw")
 
--- telescope <ctrl-r> in command line
--- vim.cmd([[cmap <C-R> <Plug>(TelescopeFuzzyCommandSearch)]])
-
--- markdown
-util.nnoremap("=t", "<cmd>TableFormat<cr>")
-
 -- better indenting
 util.vnoremap("<", "<gv")
 util.vnoremap(">", ">gv")
-
-util.nnoremap("<space>cu", function()
-    local number = math.random(math.pow(2, 127) + 1, math.pow(2, 128))
-    return "i" .. string.format("%.0f", number)
-end, {
-    expr = true,
-})
 
 wk.register({
     ["]"] = {
@@ -144,7 +131,7 @@ local leader = {
         ["-"] = { "<C-W>s", "split-window-below" },
         ["|"] = { "<C-W>v", "split-window-right" },
         ["2"] = { "<C-W>v", "layout-double-columns" },
-        ["h"] = { "<C-W>h", "window-left" },
+        ["h"] = { "<k-W>h", "window-left" },
         ["j"] = { "<C-W>j", "window-below" },
         ["l"] = { "<C-W>l", "window-right" },
         ["k"] = { "<C-W>k", "window-up" },
@@ -153,6 +140,7 @@ local leader = {
         ["L"] = { "<C-W>5>", "expand-window-right" },
         ["K"] = { ":resize -5", "expand-window-up" },
         ["="] = { "<C-W>=", "balance-window" },
+        ["r"] = { ":nohlsearch<CR>:diffupdate<CR>:syntax sync fromstart<CR>:redraw!<CR>", "redraw the screen" },
         ["s"] = { "<C-W>s", "split-window-below" },
         ["v"] = { "<C-W>v", "split-window-right" },
     },
@@ -310,6 +298,7 @@ local leader = {
         "Create Docs from README.md",
     },
 }
+
 
 for i = 0, 10 do
     leader[tostring(i)] = "which_key_ignore"
