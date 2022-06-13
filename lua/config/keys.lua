@@ -156,7 +156,12 @@ local leader = {
 	},
 	g = {
 		name = "+git",
-		g = { "<Cmd>Neogit<CR>", "Neogit" },
+		l = {
+			function()
+				require("util").float_terminal("lazygit")
+			end,
+			"LazyGit",
+		},
 		c = { "<Cmd>Telescope git_commits<CR>", "commits" },
 		b = { "<Cmd>Telescope git_branches<CR>", "branches" },
 		s = { "<Cmd>Telescope git_status<CR>", "status" },

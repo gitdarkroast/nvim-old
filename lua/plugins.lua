@@ -179,6 +179,7 @@ return require("packer").startup(function(use)
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-symbols.nvim",
 			"nvim-telescope/telescope-fzy-native.nvim",
+			"kdheepak/lazygit.nvim",
 		},
 	})
 	-- Indent Guides and rainbow brackets
@@ -207,15 +208,6 @@ return require("packer").startup(function(use)
 		wants = "nvim-web-devicons",
 		config = function()
 			require("config.bufferline")
-		end,
-	})
-
-	-- Terminal
-	use({
-		"akinsho/nvim-toggleterm.lua",
-		keys = "<M-`>",
-		config = function()
-			require("config.terminal")
 		end,
 	})
 
