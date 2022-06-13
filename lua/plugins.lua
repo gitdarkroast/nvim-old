@@ -52,9 +52,9 @@ return require("packer").startup(function(use)
 			"jose-elias-alvarez/nvim-lsp-ts-utils",
 			{
 				"jose-elias-alvarez/null-ls.nvim",
-				-- config = function()
-				--     require("config.null-ls")
-				-- end,
+				config = function()
+					require("config.null-ls")
+				end,
 			},
 			"folke/lua-dev.nvim",
 			"williamboman/nvim-lsp-installer",
@@ -247,10 +247,7 @@ return require("packer").startup(function(use)
 		wants = "nvim-web-devicons",
 		cmd = { "TroubleToggle", "Trouble" },
 		config = function()
-			require("trouble").setup({
-				auto_open = false,
-				use_diagnostic_signs = true, -- en
-			})
+			require("config.trouble")
 		end,
 	})
 
