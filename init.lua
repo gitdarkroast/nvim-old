@@ -11,9 +11,8 @@
 -- - https://github.com/folke/dot
 -- - https://github.com/LunarVim/Neovim-from-scratch
 --
--- {{{ Main configuration
+
 require("impatient")
--- Basic non-plugin related options
 require("options")
 require("plugins")
--- }}}
+

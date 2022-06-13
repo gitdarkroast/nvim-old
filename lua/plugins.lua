@@ -50,12 +50,7 @@ return require("packer").startup(function(use)
 		end,
 		requires = {
 			"jose-elias-alvarez/nvim-lsp-ts-utils",
-			{
-				"jose-elias-alvarez/null-ls.nvim",
-				config = function()
-					require("config.null-ls")
-				end,
-			},
+			"jose-elias-alvarez/null-ls.nvim", -- configured with LSP
 			"folke/lua-dev.nvim",
 			"williamboman/nvim-lsp-installer",
 		},
@@ -319,6 +314,14 @@ return require("packer").startup(function(use)
 		requires = { "nvim-lua/plenary.nvim" },
 		config = function()
 			require("config.gitsigns")
+		end,
+	})
+
+	-- Git
+	use({
+		"sar/neogit.nvim",
+		config = function()
+			require("config.neogit")
 		end,
 	})
 end) -- startup
