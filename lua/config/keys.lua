@@ -60,9 +60,15 @@ util.nnoremap("<A-k>", ":m .-2<CR>==")
 util.vnoremap("<A-k>", ":m '<-2<CR>gv=gv")
 util.inoremap("<A-k>", "<Esc>:m .-2<CR>==gi")
 
--- Switch buffers with Shift key
-util.nnoremap("<S-h>", ":bprevious<cr>")
-util.nnoremap("<S-l>", ":bnext<cr>")
+-- the following buffer moves require cokeline plugin
+util.nnoremap("<S-Tab>", "<Plug>(cokeline-focus-prev)", { silent = true })
+util.nnoremap("<Tab>", "<Plug>(cokeline-focus-next)", { silent = true })
+util.nnoremap("<Leader>p", "<Plug>(cokeline-switch-prev)", { silent = true })
+util.nnoremap("<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
+
+for i = 1, 9 do
+	util.nnoremap(("<Leader>%s"):format(i), ("<Plug>(cokeline-switch-%s)"):format(i), { silent = true })
+end
 
 -- Easier pasting
 util.nnoremap("[p", ":pu!<cr>")
@@ -94,6 +100,9 @@ util.nnoremap("<C-c>", "<esc>ciw")
 -- better indenting
 util.vnoremap("<", "<gv")
 util.vnoremap(">", ">gv")
+
+-- Toggle NvimTree
+util.nnoremap("<leader>e", ":NvimTreeToggle<CR>")
 
 wk.register({
 	["]"] = {
@@ -146,19 +155,20 @@ local leader = {
 	c = { v = { "<cmd>Vista!!<CR>", "Vista" }, o = { "<cmd>SymbolsOutline<cr>", "Symbols Outline" } },
 	b = {
 		name = "+buffer",
-		["b"] = { "<cmd>:e #<cr>", "Switch to Other Buffer" },
-		["p"] = { "<cmd>:BufferLineCyclePrev<CR>", "Previous Buffer" },
-		["["] = { "<cmd>:BufferLineCyclePrev<CR>", "Previous Buffer" },
-		["n"] = { "<cmd>:BufferLineCycleNext<CR>", "Next Buffer" },
-		["]"] = { "<cmd>:BufferLineCycleNext<CR>", "Next Buffer" },
-		["d"] = { "<cmd>:BDelete this<CR>", "Delete Buffer" },
-		["g"] = { "<cmd>:BufferLinePick<CR>", "Goto Buffer" },
+		["b"] = { "<Plug>(cokeline-switch-next)", "Switch to Other Buffer" },
+		["p"] = { "<Plug>(cokeline-focus-prev)", "Previous Buffer" },
+		["["] = { "<Plug>(cokeline-focus-prev)", "Previous Buffer" },
+		["n"] = { "<Plug>(cokeline-focus-next)", "Next Buffer" },
+		["]"] = { "<Plug>(cokeline-focus-next)", "Next Buffer" },
+		["d"] = { "<Plug>(cokeline-pick-close)", "Delete Buffer" },
+		["g"] = { "<Plug>(cokeline-pick-focus)", "Goto Buffer" },
 	},
 	g = {
 		name = "+git",
-		l = {
+		l = { -- invoke lazygit in a floating terminal
 			function()
-				require("util").float_terminal("lazygit")
+				local Terminal = require("toggleterm.terminal").Terminal
+				Terminal:new({ cmd = "lazygit", hidden = true }):toggle()
 			end,
 			"LazyGit",
 		},

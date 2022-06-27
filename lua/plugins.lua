@@ -75,7 +75,7 @@ return require("packer").startup(function(use)
 		end,
 		wants = { "LuaSnip" },
 		requires = {
-			"hrsh7th/cmp-nvim-lsp",
+			{ "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp" },
 			"hrsh7th/cmp-buffer", -- buffer completion
 			"hrsh7th/cmp-path", -- path completion
 			"hrsh7th/cmp-cmdline", -- cmdline completion
@@ -201,13 +201,22 @@ return require("packer").startup(function(use)
 			require("config.comment")
 		end,
 	})
-	-- Tabs
+
+	-- A bufferline plugin
+	-- use({
+	-- 	"akinsho/bufferline.nvim",
+	-- 	event = "BufReadPre",
+	-- 	wants = "nvim-web-devicons",
+	-- 	config = function()
+	-- 		require("config.bufferline")
+	-- 	end,
+	-- })
 	use({
-		"akinsho/bufferline.nvim",
+		"noib3/nvim-cokeline",
 		event = "BufReadPre",
 		wants = "nvim-web-devicons",
 		config = function()
-			require("config.bufferline")
+			require("config.cokeline")
 		end,
 	})
 
@@ -273,12 +282,30 @@ return require("packer").startup(function(use)
 	use({ "kevinhwang91/nvim-hlslens" })
 
 	-- Statusline
+	-- use({
+	-- 	"nvim-lualine/lualine.nvim",
+	-- 	requires = { "rlch/github-notifications.nvim" },
+	-- 	event = "VimEnter",
+	-- 	config = [[require('config.lualine')]],
+	-- 	wants = "nvim-web-devicons",
+	-- })
+	--
 	use({
-		"nvim-lualine/lualine.nvim",
-		requires = { "rlch/github-notifications.nvim" },
+		"feline-nvim/feline.nvim",
+		requires = {
+			"lewis6991/gitsigns.nvim",
+			"nvim-lua/plenary.nvim",
+			"kyazdani42/nvim-web-devicons",
+			"nvim-lua/lsp-status.nvim",
+		},
 		event = "VimEnter",
-		config = [[require('config.lualine')]],
-		wants = "nvim-web-devicons",
+		config = function()
+			require("config.feline")
+		end,
+	})
+
+	use({
+		"nvim-lua/lsp-status.nvim",
 	})
 
 	use({
