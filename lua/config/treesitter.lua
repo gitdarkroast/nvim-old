@@ -1,26 +1,17 @@
 local ts_configs = require("nvim-treesitter.configs")
 ts_configs.setup({
 	ensure_installed = {
-		"bash",
-		"c",
-		"cmake",
-		"comment",
 		"cpp",
-		"css",
 		"fish",
 		"go",
 		"html",
 		"java",
-		"javascript",
 		"jsonc",
 		"lua",
-		"markdown",
 		"python",
 		"regex",
 		"rust",
 		"toml",
-		"yaml",
-		"wgsl",
 	},
 	highlight = { enable = true, use_languagetree = true },
 	indent = { enable = false },
@@ -92,14 +83,3 @@ ts_configs.setup({
 		},
 	},
 })
-
--- Add Markdown
-local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-parser_config.jsonc.filetype_to_parsername = "json"
-
-parser_config.wgsl = {
-	install_info = {
-		url = "https://github.com/szebniok/tree-sitter-wgsl",
-		files = { "src/parser.c" },
-	},
-}

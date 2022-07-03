@@ -33,6 +33,7 @@ return require("packer").startup(function(use)
 			vim.notify = require("notify")
 		end,
 	})
+
 	-- LSP
 	use({
 		"neovim/nvim-lspconfig",
@@ -55,15 +56,24 @@ return require("packer").startup(function(use)
 			"williamboman/nvim-lsp-installer",
 		},
 	})
+
+    -- LSPSaga: High performant UI to complement LSP
+    use({
+        "glepnir/lspsaga.nvim",
+        branch = "main",
+        config = function()
+            require("config.lspsaga")
+        end,
+    })
 	-- Visual representation of undo
 	use({ "mbbill/undotree", cmd = "UndotreeToggle" })
 	-- Additional Language tools
+
 	-- Rust
 	use({
 		"simrat39/rust-tools.nvim",
 		module = "rust-tools",
 	})
-	use({ "kazhala/close-buffers.nvim", cmd = "BDelete" })
 
 	-- Code completion
 	use({
@@ -203,14 +213,6 @@ return require("packer").startup(function(use)
 	})
 
 	-- A bufferline plugin
-	-- use({
-	-- 	"akinsho/bufferline.nvim",
-	-- 	event = "BufReadPre",
-	-- 	wants = "nvim-web-devicons",
-	-- 	config = function()
-	-- 		require("config.bufferline")
-	-- 	end,
-	-- })
 	use({
 		"noib3/nvim-cokeline",
 		event = "BufReadPre",
@@ -279,17 +281,15 @@ return require("packer").startup(function(use)
 		end,
 	})
 
-	use({ "kevinhwang91/nvim-hlslens" })
+    -- Highlight searching terms
+	use({
+        "kevinhwang91/nvim-hlslens",
+		config = function()
+			require("config.nvim-hlslens")
+		end,
+    })
 
 	-- Statusline
-	-- use({
-	-- 	"nvim-lualine/lualine.nvim",
-	-- 	requires = { "rlch/github-notifications.nvim" },
-	-- 	event = "VimEnter",
-	-- 	config = [[require('config.lualine')]],
-	-- 	wants = "nvim-web-devicons",
-	-- })
-	--
 	use({
 		"feline-nvim/feline.nvim",
 		requires = {
@@ -304,8 +304,12 @@ return require("packer").startup(function(use)
 		end,
 	})
 
+    -- LSP statusline info
 	use({
 		"nvim-lua/lsp-status.nvim",
+		config = function()
+			require("config.lsp-status")
+		end,
 	})
 
 	use({
@@ -343,4 +347,23 @@ return require("packer").startup(function(use)
 			require("config.neogit")
 		end,
 	})
+
+    -- Zen mode
+    use ({
+        "folke/zen-mode.nvim",
+        requires = {
+            "folke/twilight.nvim",
+        },
+        config = function()
+            require("config.zen-mode")
+        end
+    })
+
+    -- focous on a region of code
+    use({
+        "folke/twilight.nvim",
+        config = function()
+            require("config.twilight")
+        end
+    })
 end) -- startup
