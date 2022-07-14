@@ -7,6 +7,7 @@ vim.bo.shiftwidth = indent -- Size of an indent
 vim.bo.smartindent = true -- Insert indents automatically
 vim.bo.undofile = true
 
+vim.g.load_python3_provider = '/usr/local/bin/python3'
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 vim.opt.autowrite = true -- enable auto write

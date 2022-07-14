@@ -1,4 +1,9 @@
-require("lightspeed").setup({
+local ls_status_ok, ls = pcall(require, "lightspeed")
+if not ls_status_ok then
+	return
+end
+
+ls.setup({
   -- exit_after_idle_msecs = { labeled = nil, unlabeled = 1000 },
   --
   -- -- s/x

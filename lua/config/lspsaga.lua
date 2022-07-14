@@ -1,3 +1,8 @@
+local saga_status_ok, saga = pcall(require, "lspsaga")
+if not saga_status_ok then
+	return
+end
+
 local saga = require 'lspsaga'
 saga.init_lsp_saga({
     -- "single" | "double" | "rounded" | "bold" | "plus"
@@ -48,8 +53,11 @@ saga.init_lsp_saga({
     rename_action_quit = "<C-c>",
     definition_preview_icon = "  ",
     -- show symbols in winbar must nightly
-    symbol_in_winbar = false,
-    winbar_separator = '>',
-    winbar_show_file = true,
-    server_filetype_map = {},
+    symbol_in_winbar = {
+        in_custom = false,
+        enable = false,
+        separator = ' ',
+        show_file = true,
+        click_support = false,
+    },
 })

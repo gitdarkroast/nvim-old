@@ -329,6 +329,14 @@ return require("packer").startup(function(use)
 		end,
 	})
 
+    -- Smooth scrolling
+    -- use({
+    --     "karb94/neoscroll.nvim",
+    --     config = function ()
+    --         require("config.neoscroll-cfg")
+    --     end
+    -- })
+
 	-- Git Gutter
 	use({
 		"lewis6991/gitsigns.nvim",
