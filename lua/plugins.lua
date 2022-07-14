@@ -308,7 +308,7 @@ return require("packer").startup(function(use)
 	use({
 		"nvim-lua/lsp-status.nvim",
 		config = function()
-			require("config.lsp-status")
+			require("config.lsp-status-cfg")
 		end,
 	})
 
@@ -321,11 +321,17 @@ return require("packer").startup(function(use)
 	})
 
 	-- Look were you want to go!
+	-- use({
+	-- 	"ggandor/lightspeed.nvim",
+	-- 	keys = { "s", "S", "f", "F", "t", "T" },
+	-- 	config = function()
+	-- 		require("config.lightspeed")
+	-- 	end,
+	-- })
 	use({
-		"ggandor/lightspeed.nvim",
-		keys = { "s", "S", "f", "F", "t", "T" },
+		"ggandor/leap.nvim",
 		config = function()
-			require("config.lightspeed")
+			require("config.leap-cfg")
 		end,
 	})
 
