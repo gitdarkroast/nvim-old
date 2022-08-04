@@ -101,8 +101,8 @@ util.nnoremap("<C-c>", "<esc>ciw")
 util.vnoremap("<", "<gv")
 util.vnoremap(">", ">gv")
 
--- Toggle NvimTree
-util.nnoremap("<leader>e", ":NvimTreeToggle<CR>")
+-- Toggle Neotree
+util.nnoremap("<leader>e", ":Neotree reveal left<CR>")
 
 wk.register({
 	["]"] = {
@@ -165,18 +165,12 @@ local leader = {
 	},
 	g = {
 		name = "+git",
-		l = { -- invoke lazygit in a floating terminal
-			function()
-				local Terminal = require("toggleterm.terminal").Terminal
-				Terminal:new({ cmd = "lazygit", hidden = true }):toggle()
-			end,
-			"LazyGit",
-		},
+        b = { "<Cmd>Telescope git_branches<CR>", "branches" },
 		c = { "<Cmd>Telescope git_commits<CR>", "commits" },
-		b = { "<Cmd>Telescope git_branches<CR>", "branches" },
+        d = { "<cmd>DiffviewOpen<cr>", "DiffView" },
+        h = { name = "+hunk" },
+        n = { ":Neogit<CR>", "Neogit"},
 		s = { "<Cmd>Telescope git_status<CR>", "status" },
-		d = { "<cmd>DiffviewOpen<cr>", "DiffView" },
-		h = { name = "+hunk" },
 	},
 	["h"] = {
 		name = "+help",
@@ -218,7 +212,7 @@ local leader = {
 	},
 	f = {
 		name = "+file",
-		t = { "<cmd>NvimTreeToggle<cr>", "NvimTree" },
+		t = { "<cmd>Neotree<cr>", "Neotree" },
 		f = { "<cmd>Telescope find_files<cr>", "Find File" },
 		r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
 		n = { "<cmd>enew<cr>", "New File" },
@@ -290,11 +284,7 @@ local leader = {
 	},
 	x = {
 		name = "+errors",
-		x = { "<cmd>TroubleToggle<cr>", "Trouble" },
-		w = { "<cmd>TroubleToggle workspace_diagnosticw<cr>", "Workspace Diagnostics" },
-		d = { "<cmd>TroubleToggle document_diagnostics<cr>", "Document Diagnostics" },
-		l = { "<cmd>TroubleToggle loclist<cr>", "Open Location List" },
-		q = { "<cmd>TroubleToggle quickfix<cr>", "Open Quickfix List" },
+		x = { "<cmd>Neotree diagnostics reveal bottom<cr>", "Document Diagnostics" },
 	},
 	Z = { [[<cmd>lua require("zen-mode").reset()<cr>]], "Zen Mode" },
 	z = { [[<cmd>ZenMode<cr>]], "Zen Mode" },

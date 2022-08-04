@@ -155,14 +155,20 @@ return require("packer").startup(function(use)
 		wants = { "plenary.nvim", "popup.nvim" },
 		requires = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim" },
 	})
-	-- Fast file tree
-	use({
-		"kyazdani42/nvim-tree.lua",
-		cmd = { "NvimTreeToggle", "NvimTreeClose" },
-		config = function()
-			require("config.tree")
-		end,
-	})
+    --
+    -- Browse file system
+    use({
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v2.x",
+        requires = {
+        "nvim-lua/plenary.nvim",
+        "kyazdani42/nvim-web-devicons",
+        "MunifTanjim/nui.nvim",
+        },
+        config = function()
+            require("config.neo-tree-cfg")
+        end,
+    })
 	-- Fuzzy finder
 	use({
 		"nvim-telescope/telescope.nvim",
@@ -179,7 +185,6 @@ return require("packer").startup(function(use)
 			"telescope-z.nvim",
 			"telescope-fzy-native.nvim",
 			"telescope-project.nvim",
-			"trouble.nvim",
 			"telescope-symbols.nvim",
 		},
 		requires = {
@@ -189,7 +194,6 @@ return require("packer").startup(function(use)
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-symbols.nvim",
 			"nvim-telescope/telescope-fzy-native.nvim",
-			"kdheepak/lazygit.nvim",
 		},
 	})
 	-- Indent Guides and rainbow brackets
@@ -239,16 +243,13 @@ return require("packer").startup(function(use)
 		end,
 	})
 
-	use({
-		"folke/trouble.nvim",
-		event = "BufReadPre",
-		wants = "nvim-web-devicons",
-		cmd = { "TroubleToggle", "Trouble" },
-		config = function()
-			require("config.trouble")
-		end,
-	})
+    -- Diagnostic tree
+    use({
+        "mrbjarksen/neo-tree-diagnostics.nvim",
+        requires = "nvim-neo-tree/neo-tree.nvim",
+    })
 
+    -- Highlight other instance of the work under the cursor
 	use({
 		"RRethy/vim-illuminate",
 		event = "CursorHold",
@@ -320,14 +321,7 @@ return require("packer").startup(function(use)
 		end,
 	})
 
-	-- Look were you want to go!
-	-- use({
-	-- 	"ggandor/lightspeed.nvim",
-	-- 	keys = { "s", "S", "f", "F", "t", "T" },
-	-- 	config = function()
-	-- 		require("config.lightspeed")
-	-- 	end,
-	-- })
+	-- Speedy cursor movement
 	use({
 		"ggandor/leap.nvim",
 		config = function()
