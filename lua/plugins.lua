@@ -35,6 +35,18 @@ return require("packer").startup(function(use)
 	})
 
 	-- LSP
+    use({
+        "williamboman/mason.nvim",
+        wants = {
+            "nvim-lspconfig",
+            "mason-lspconfig",
+        },
+		config = function()
+			require("config.mason-cfg")
+		end,
+
+    })
+
 	use({
 		"neovim/nvim-lspconfig",
 		opt = true,
@@ -43,8 +55,7 @@ return require("packer").startup(function(use)
 			"nvim-lsp-ts-utils",
 			"null-ls.nvim",
 			"lua-dev.nvim",
-			"cmp-nvim-lsp",
-			"nvim-lsp-installer",
+			-- "cmp-nvim-lsp",
 		},
 		config = function()
 			require("config.lsp")
@@ -53,9 +64,15 @@ return require("packer").startup(function(use)
 			"jose-elias-alvarez/nvim-lsp-ts-utils",
 			"jose-elias-alvarez/null-ls.nvim", -- configured with LSP
 			"folke/lua-dev.nvim",
-			"williamboman/nvim-lsp-installer",
 		},
 	})
+
+    use({
+        "williamboman/mason-lspconfig.nvim",
+        config = function()
+            require("config.mason-lspconfig-cfg")
+        end,
+    })
 
     -- LSPSaga: High performant UI to complement LSP
     use({
@@ -85,7 +102,10 @@ return require("packer").startup(function(use)
 		end,
 		wants = { "LuaSnip" },
 		requires = {
-			{ "hrsh7th/cmp-nvim-lsp", module = "cmp_nvim_lsp" },
+			-- { 
+   --              "hrsh7th/cmp-nvim-lsp",
+   --              module = "cmp_nvim_lsp", 
+   --          },
 			"hrsh7th/cmp-buffer", -- buffer completion
 			"hrsh7th/cmp-path", -- path completion
 			"hrsh7th/cmp-cmdline", -- cmdline completion
