@@ -4,6 +4,14 @@ local telescope = require("telescope")
 telescope.setup({
 	extensions = {
 		fzy_native = { override_generic_sorter = false, override_file_sorter = true },
+		project = {
+			base_dirs = {
+				{'~/.config', max_depth = 4},
+				{'~/workspace', max_depth = 3},
+			},
+			hidden_files = true, -- default: false
+			theme = "dropdown"
+		}
 	},
 	defaults = {
 		--mappings = { i = { ["<c-t>"] = trouble.open_with_trouble } },
@@ -63,6 +71,7 @@ telescope.setup({
 -- telescope.load_extension("frecency")
 telescope.load_extension("fzy_native")
 telescope.load_extension("z")
+telescope.load_extension("project")
 
 
 local M = {}
@@ -88,7 +97,7 @@ local util = require("util")
 
 util.nnoremap("<Leader><Space>", M.project_files)
 util.nnoremap("<Leader>fd", function()
-	require("telescope.builtin").git_files({ cwd = "~/dot" })
+	require("telescope.builtin").git_files({ cwd = "~/.config" })
 end)
 
 util.nnoremap("<leader>fz", function()
