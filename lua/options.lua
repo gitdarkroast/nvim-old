@@ -2,13 +2,6 @@
 local cmd = vim.cmd
 local indent = 4
 
-vim.bo.expandtab = true -- Use spaces instead of tabs
-vim.bo.shiftwidth = indent -- Size of an indent
-vim.bo.smartindent = true -- Insert indents automatically
-vim.bo.undofile = true
-
-vim.g.mapleader = " "
-vim.g.maplocalleader = ","
 vim.opt.autowrite = true -- enable auto write
 vim.opt.backup = false -- do not create a backup file
 vim.opt.clipboard = "unnamedplus" -- sync with system clipboard
@@ -19,8 +12,8 @@ vim.opt.concealcursor = "n" -- Hide * markup for bold and italic
 vim.opt.confirm = true -- confirm to save changes before exiting modified buffer
 vim.opt.cursorline = true -- Enable highlighting of the current line
 vim.opt.cursorcolumn = true -- Enable highlighting of the current column
-vim.opt.expandtab = true -- Use spaces instead of tabs
-vim.opt.fileencoding = "utf-8"
+vim.bo.expandtab = true -- Use spaces instead of tabs
+vim.opt.fileencoding = "utf-8" -- encoding written to a file
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- TreeSitter folding
 vim.opt.foldlevel = 6
 vim.opt.foldmethod = "expr" -- TreeSitter folding
@@ -35,14 +28,17 @@ vim.opt.inccommand = "split" -- preview incremental substitute
 vim.opt.iskeyword:append("-")
 vim.opt.joinspaces = false -- No double spaces with join after a dot
 vim.opt.list = true -- Show some invisible characters (tabs...
---vim.opt.listchars:append("space:⋅")
+vim.g.mapleader = " "
 --vim.opt.listchars:append("eol:↴")
+--vim.opt.listchars:append("space:⋅")
+vim.g.maplocalleader = ","
 vim.opt.mouse = "a" -- enable mouse mode
 vim.opt.number = true -- Print line number
 vim.opt.pumblend = 0 -- Popup blend
 vim.opt.pumheight = 10 -- Maximum number of entries in a popup
 vim.opt.relativenumber = true -- Relative line numbers
-vim.opt.scrolloff = 4 -- Lines of context
+vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
+vim.opt.scrolloff = 8 -- Lines of context
 vim.opt.shell = "/usr/local/bin/fish" -- change default shell to fish
 vim.opt.shiftround = true -- Round indent
 vim.opt.shiftwidth = indent -- Size of an indent
@@ -58,21 +54,21 @@ vim.opt.termguicolors = true -- True color support
 vim.opt.undofile = true
 vim.opt.undolevels = 10000
 vim.opt.updatetime = 200 -- save swap file and trigger CursorHold
-vim.opt.wildmode = "longest:full,full" -- Command-line completion mode
+--vim.opt.wildmode = "longest:full,full" -- Command-line completion mode
 vim.opt.wrap = false -- Disable line wrap
-vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
+vim.bo.undofile = true
 
 -- don't load the plugins below
-vim.g.loaded_gzip = 1
+vim.g.loaded_2html_plugin = 1
 vim.g.loaded_fzf = 1
+vim.g.loaded_gzip = 1
+vim.g.loaded_matchit = 1
+vim.g.loaded_matchparen = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_tar = 1
 vim.g.loaded_tarPlugin = 1
 vim.g.loaded_zipPlugin = 1
-vim.g.loaded_2html_plugin = 1
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_matchit = 1
-vim.g.loaded_matchparen = 1
 
 -- Check if we need to reload the file when it changed
 cmd("au FocusGained * :checktime")
@@ -94,3 +90,4 @@ cmd("au TextYankPost * lua vim.highlight.on_yank {}")
 -- windows to close with "q"
 vim.cmd([[autocmd FileType help,startuptime,qf,lspinfo nnoremap <buffer><silent> q :close<CR>]])
 vim.cmd([[autocmd FileType man nnoremap <buffer><silent> q :quit<CR>]])
+--}}}
