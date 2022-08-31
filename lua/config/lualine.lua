@@ -22,7 +22,7 @@ local config = {
     options = {
         -- Disable sections and component separators
         --theme = "tokyonight",
-        theme = "nightfox",
+        -- theme = "nightfox",
         section_separators = { left = "", right = "" },
         component_separators = { left = "", right = "" },
         icons_enabled = true,
