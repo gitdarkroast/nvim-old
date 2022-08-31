@@ -13,6 +13,7 @@ if fn.empty(fn.glob(install_path)) > 0 then
 	})
 	execute("packadd packer.nvim")
 end
+--}}}
 
 -- autocompile
 vim.cmd([[
@@ -37,15 +38,19 @@ return require("packer").startup(function(use)
 	-- LSP
     use({
         "williamboman/mason.nvim",
-        wants = {
-            "nvim-lspconfig",
-            "mason-lspconfig",
-        },
 		config = function()
 			require("config.mason-cfg")
 		end,
 
     })
+
+    use({
+        "williamboman/mason-lspconfig.nvim",
+        config = function()
+            require("config.mason-lspconfig-cfg")
+        end,
+    })
+
 
 	use({
 		"neovim/nvim-lspconfig",
@@ -67,12 +72,6 @@ return require("packer").startup(function(use)
 		},
 	})
 
-    use({
-        "williamboman/mason-lspconfig.nvim",
-        config = function()
-            require("config.mason-lspconfig-cfg")
-        end,
-    })
 
     -- LSPSaga: High performant UI to complement LSP
     use({
@@ -129,10 +128,16 @@ return require("packer").startup(function(use)
 	})
 
 	-- Theme: color schemes
+	--[[ use({ ]]
+	--[[ 	"EdenEast/nightfox.nvim", ]]
+	--[[ 	config = function() ]]
+	--[[ 		require("config.nightfox") ]]
+	--[[ 	end, ]]
+	--[[ }) ]]
 	use({
-		"EdenEast/nightfox.nvim",
+		"ellisonleao/gruvbox.nvim",
 		config = function()
-			require("config.theme")
+			require("config.gruvbox")
 		end,
 	})
 	-- Theme: icons
@@ -310,19 +315,12 @@ return require("packer").startup(function(use)
 		end,
     })
 
-	-- Statusline
-	use({
-		"feline-nvim/feline.nvim",
-		requires = {
-			"lewis6991/gitsigns.nvim",
-			"nvim-lua/plenary.nvim",
-			"kyazdani42/nvim-web-devicons",
-			"nvim-lua/lsp-status.nvim",
-		},
-		event = "VimEnter",
+	use ({
+		'nvim-lualine/lualine.nvim',
 		config = function()
-			require("config.feline")
+			require("config.lualine")
 		end,
+		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
 	})
 
     -- LSP statusline info

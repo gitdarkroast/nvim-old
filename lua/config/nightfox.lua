@@ -1,9 +1,12 @@
-
 -- set the color scheme you want to use
+local colorscheme = "nightfox"
+local status_ok, cs = pcall(require, colorscheme)
+if not status_ok then
+    return
+end
 
-
--- Nightfox
-require("nightfox").setup({
+-- nightfox
+cs.setup({
     options = {
         compile_path = vim.fn.stdpath("cache") .. "/nightfox",
         compile_file_suffix = "_compiled",
@@ -33,11 +36,15 @@ require("nightfox").setup({
     },
 })
 
--- Set the colorscheme you want:
-local colorscheme = "nightfox"
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then
 	vim.notify("colorscheme " .. colorscheme .. "not found!")
 	return
 end
---vim.cmd("colorscheme nightfox")
+
+-- Update the Lualine status line
+require("lualine").setup({
+	options = {
+		theme = colorscheme
+	}
+})
